@@ -5,7 +5,7 @@
     (slot idioma)
     (slot capitulos (type integer))
     (slot peticion)
-    (slot situacion);este slot se añade después en la base de hechos, cuidado
+    (slot situacion);este slot se aÃ±ade despuÃ©s en la base de hechos, cuidado
     )
 
 (deftemplate serie_res
@@ -19,7 +19,7 @@
     (slot nombre);nombre del usuario
     (slot tiempo); si/no
     (slot fragmentada) ;si/no
-    (slot compañia);si/no
+    (slot compaÃ±ia);si/no
     (slot animo);feliz/triste
     (slot violencia);si/no
     (slot sangre);si/no
@@ -51,7 +51,7 @@
     (serie (nombre Narcos)(genero Drama Crimen Suspense)(formato 60)(idioma ingles)(capitulos 50)(peticion ambos))
     (serie (nombre Lucifer)(genero Drama Fantasia Crimen)(formato 40)(idioma ingles)(capitulos 50)(peticion entretenimiento))
     (serie (nombre 13_Reasons_Why)(genero Drama)(formato 60)(idioma ingles)(capitulos 10)(peticion pensar))
-    (serie (nombre Outlander)(genero Drama Histórico Ciencia_Ficcion Romance)(formato 40)(idioma ingles)(capitulos 50)(peticion entretenimiento))
+    (serie (nombre Outlander)(genero Drama HistÃ³rico Ciencia_Ficcion Romance)(formato 40)(idioma ingles)(capitulos 50)(peticion entretenimiento))
     (serie (nombre Teen_Wolf)(genero Drama Fantasia)(formato 40)(idioma ingles)(capitulos 100)(peticion ambos))
     (serie (nombre Jojo's_Bizarre_Adventure)(genero Accion)(formato 20)(idioma japones)(capitulos 100)(peticion entretenimiento))
     (serie (nombre Mozart_In_The_Jungle) (genero Comedia Musical)(formato 40)(idioma ingles)(capitulos 50)(peticion entretenimiento))
@@ -70,11 +70,11 @@
     (serie (nombre Boku_no_Hero_Academia)(genero Aventura Accion Comedia Crimen)(formato 20)(idioma japones)(capitulos 25)(peticion entretenimiento))
     (serie (nombre Attack_on_Titan)(genero Accion Aventura Drama Fantasia)(formato 20)(idioma japones)(capitulos 50)(peticion ambos))
     (serie (nombre Miraculous_Ladybug)(genero Accion Fantasia Comedia)(formato 20)(idioma frances)(capitulos 25)(peticion entretenimiento))
-    (serie (nombre Como_Conocí_a_Vuestra_Madre)(genero Comedia)(formato 20)(idioma ingles)(capitulos 100)(peticion entretenimiento))
+    (serie (nombre Como_ConocÃ­_a_Vuestra_Madre)(genero Comedia)(formato 20)(idioma ingles)(capitulos 100)(peticion entretenimiento))
     (serie (nombre Arrow)(genero Drama Fantasia Accion)(formato 40)(idioma ingles)(capitulos 100)(peticion ambos))
     (serie (nombre The_Flash)(genero Drama Fantasia Accion)(formato 40)(idioma ingles)(peticion ambos))
     (serie (nombre Stranger_Things)(genero Drama Fantasia Suspense)(formato 60)(idioma ingles)(peticion ambos))
-    (serie (nombre El_Ministerio_del_Tiempo)(formato 60)(idioma español)(capitulos 25)(peticion ambos))
+    (serie (nombre El_Ministerio_del_Tiempo)(formato 60)(idioma espaÃ±ol)(capitulos 25)(peticion ambos))
     )
 
 (deffacts pregunta-respuesta
@@ -110,7 +110,7 @@
     	then (return 0))
     )
 
-;Determina el número de capitulos y duración de los mismos adecuado
+;Determina el nÃºmero de capitulos y duraciÃ³n de los mismos adecuado
 (defrule fragmentada_tiempo
     ?up<-(usuario_peticion (tiempo ?tiempo)(fragmentada ?frag))
     ?uo <- (usuario_a_ordenador (tiempo $?t))
@@ -150,10 +150,10 @@
     (printout t "Holaaaa"crlf)
     (modify ?uo (tiempo 100 75 50)(duracion 20 40 60 90))) 
 
-;En el caso de que tenga tiempo y no quiera fragmentar las series y quiera compañía
+;En el caso de que tenga tiempo y no quiera fragmentar las series y quiera compaÃ±Ã­a
 (defrule soledad_o_no
     (declare (no-loop TRUE))
-    ?up<-(usuario_peticion (compañia ?comp))
+    ?up<-(usuario_peticion (compaÃ±ia ?comp))
     ?uo <- (usuario_a_ordenador (tiempo $?tiempo) (duracion $?dur)(genero $?g)(idioma $?i)(situacion ?s)(peticion ?p))
     (test (eq ?comp si))
     (test (eq 3 (length$ $?tiempo)))
@@ -161,7 +161,7 @@
     =>
     (modify ?uo (tiempo 15 20))
    ; (retract ?uo)
-   ; (modify ?up (compañia done) )
+   ; (modify ?up (compaÃ±ia done) )
     ;(assert (usuario_a_ordenador (tiempo 15 20) (duracion $?dur)(genero $?g)(idioma $?i)(situacion ?s)(peticion ?p)))
     (printout t "Hola c:"crlf)
     )
@@ -169,7 +169,7 @@
 ;En el caso de que tenga tiempo y quiera fragmentar
 (defrule soledad_o_no_1
 	(declare (no-loop TRUE))
-    (usuario_peticion (compañia ?comp))
+    (usuario_peticion (compaÃ±ia ?comp))
     ?uo <- (usuario_a_ordenador (tiempo $?tiempo) (duracion $?dur))
     (test (eq ?comp si))
     (test (eq 3 (length$ $?tiempo)))
@@ -177,9 +177,9 @@
     =>
     (modify ?uo (tiempo 25 10)(duracion 20 $?dur )))
 
-;En el resto de casos nos da igual lo que diga, no se añadirá nada
+;En el resto de casos nos da igual lo que diga, no se aÃ±adirÃ¡ nada
 
-;Determina la tolerancia del usuario al idioma japonés
+;Determina la tolerancia del usuario al idioma japonÃ©s
 (defrule anime_1
     (usuario_peticion (anime ?ani))
     ?uo <- (usuario_a_ordenador (idioma $?i))
@@ -192,7 +192,7 @@
     ?uo <- (usuario_a_ordenador (idioma $?i))
     (test (eq ?ani no))
     =>
-    (modify ?uo (idioma ingles español frances)))
+    (modify ?uo (idioma ingles espaÃ±ol frances)))
 
 (defrule energia
     (usuario_peticion (energia ?e))
@@ -342,7 +342,7 @@
     (exists (need-usuario_peticion (nombre ?n)))
     ?u <- (usuario_peticion (nombre ?n)(anime nil))
     =>
-    (printout t ?n ", ¿estarías dispuesta a ver una serie de anime? (responde con si o no): ")
+    (printout t ?n ", Â¿estarÃ­as dispuesta a ver una serie de anime? (responde con si o no): ")
     (modify ?u (anime(read)))
     )
 
@@ -354,37 +354,37 @@
     (exists (need-usuario_peticion (nombre ?n)))
     ?u <- (usuario_peticion (nombre ?n)(mentalidad nil))
     =>
-    (printout t ?n ", ¿como definirías tu tipo de pensamiento, logica o creativa?: ")
+    (printout t ?n ", Â¿como definirÃ­as tu tipo de pensamiento, logica o creativa?: ")
     (modify ?u (mentalidad(read)))
     )
 
 
-;SLOT ENERGIA-PETICIÓN
+;SLOT ENERGIA-PETICIÃ“N
 
 (defrule pregunta_peticion
     (declare (salience -1))
     (exists (need-usuario_peticion (nombre ?n)))
     ?u <- (usuario_peticion (nombre ?n)(energia nil))
     =>
-    (printout t ?n ", nos preocupamos por ti, ¿como te encuentras ahora mismo?(responde entre activo/cansado/normal): ")
+    (printout t ?n ", nos preocupamos por ti, Â¿como te encuentras ahora mismo?(responde entre activo/cansado/normal): ")
     (modify ?u (energia(read)))
     )
 
 
-;SLOT COMPAÑIA
-(defrule pregunta_compañia
+;SLOT COMPAÃ‘IA
+(defrule pregunta_compaÃ±ia
     (declare (salience -1))
     (exists (need-usuario_peticion (nombre ?n)))
-    ?u <- (usuario_peticion (nombre ?n)(compañia nil))
+    ?u <- (usuario_peticion (nombre ?n)(compaÃ±ia nil))
     ?uo <- (usuario_a_ordenador (duracion $?d)(tiempo $?t))
     =>
-    (printout t ?n ", ¿prefieres ver las series en compañia? (responde con si/no): ")
-    (modify ?u (compañia(read)))
+    (printout t ?n ", Â¿prefieres ver las series en compaÃ±ia? (responde con si/no): ")
+    (modify ?u (compaÃ±ia(read)))
     )
 
-(defrule respuesta_compañia_si_1
+(defrule respuesta_compaÃ±ia_si_1
     (declare (no-loop TRUE)(salience 10))
-    ?u <- (usuario_peticion (nombre ?n)(compañia si))
+    ?u <- (usuario_peticion (nombre ?n)(compaÃ±ia si))
     ?uo <- (usuario_a_ordenador (duracion $?d)(tiempo $?t))
     (test (eq 3 (length$ $?d)))
     (test (eq 3 (length$ $?t)))
@@ -392,9 +392,9 @@
     (modify ?uo (tiempo 25 10)(duracion 20 $?d ))
     )
 
-(defrule respuesta_compañia_si_2
+(defrule respuesta_compaÃ±ia_si_2
     (declare (no-loop TRUE)(salience 10))
-    ?u <- (usuario_peticion (nombre ?n)(compañia si))
+    ?u <- (usuario_peticion (nombre ?n)(compaÃ±ia si))
     ?uo <- (usuario_a_ordenador (duracion $?d)(tiempo $?t))
     (test (eq 4 (length$ $?d)))
     (test (eq 3 (length$ $?t)))
@@ -402,15 +402,15 @@
     (modify ?uo (tiempo 25 10))
     )
    
-;Tiempo = número de capitulos
-;Duracion = duración de cada uno de los capítulos
+;Tiempo = nÃºmero de capitulos
+;Duracion = duraciÃ³n de cada uno de los capÃ­tulos
 (defrule seleccion
     (declare (salience -2))
     ?sr <- (serie_res (caracteristicas_menos 0)(nombres $?ns))
     ?uo <- (usuario_a_ordenador (tiempo $?t)(duracion $?d)(genero $?g)(idioma $?i)(peticion ?p)(situacion ?s1))
     ?serie <- (serie (nombre ?n)(genero $?g1)(formato ?f)(idioma ?i1)(capitulos ?c)(peticion ?p1)(situacion ?s2))
     (test (eq 1 (select-genero ?serie ?uo)))
-    (test (member$ ?f $?d));Formato de capítulo
+    (test (member$ ?f $?d));Formato de capÃ­tulo
     (test (member$ ?c $?t))
     (test (member$ ?i1 $?i))
     (test (eq ?s1 ?s2))
@@ -431,7 +431,7 @@
     (test (eq 1 (select-genero ?serie ?uo)))
     (test (not (member$ ?n $?ns1)))
     (test (not (member$ ?n $?ns2)))
-    (test (member$ ?f $?d));Formato de capítulo
+    (test (member$ ?f $?d));Formato de capÃ­tulo
     (test (member$ ?c $?t))
     (test (eq ?p ?p1))
    
